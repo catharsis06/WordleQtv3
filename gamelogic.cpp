@@ -46,6 +46,10 @@ QString GameLogic::processGuess(const QString &guess)
 
         return QString("[game]: Вы отгадали слово и заработали %1 баллов! Желаете продолжить?").arg(points);
     }
+
+    if(m_attempts >= 5) {
+        return QString("[game]: Попытки закончились. Ваш счёт: %1 баллов.").arg(m_score);
+    }
 };
 
 QString GameLogic::getFeedback(const QString &guess) const
