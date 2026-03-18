@@ -37,6 +37,15 @@ QString GameLogic::processGuess(const QString &guess)
     m_attempts++;
 
     emit logMessage("[player]: " + g);
+
+    if (g == m_secretWord){
+        int points = 6 - m_attempts;
+        if (points < 1) points = 1;
+
+        m_score += points;
+
+        return QString("[game]: Вы отгадали слово и заработали %1 баллов! Желаете продолжить?").arg(points);
+    }
 };
 
 QString GameLogic::getFeedback(const QString &guess) const
