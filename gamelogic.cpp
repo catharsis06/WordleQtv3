@@ -25,3 +25,16 @@ void GameLogic::startNewGame()
 
     emit logMessage("[game]: Загаданное слово: ****");
 }
+
+QString GameLogic::processGuess(const QString &guess)
+{
+    QString g = guess.trimmed().toLower();
+
+    if (g.length() != 4) {
+        return "[game]: Слово должно быть из 4 букв!";
+    }
+
+    m_attempts++;
+
+    emit logMessage("[player]: + g");
+};
