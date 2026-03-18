@@ -71,3 +71,20 @@ bool GameLogic::isGameOver() const
 {
     return m_attempts >= 5;
 }
+
+void GameLogic::saveScore()
+{
+    if (m_score == 0) return;
+
+    QString path = QDir::currentPath() + "/records.txt";
+
+    QFile file(path);
+
+    if(file.open(QIODevice::Append | QIODevice::Text)) {
+        QTextStream out(&file);
+
+        out << m_score << "\n";
+
+        file.close();
+    }
+}
