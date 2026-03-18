@@ -86,6 +86,35 @@ void MainWindow::onCheck()
         game->saveScore();
         isPlaying = false;
         ui->inputLineEdit->setEnabled(false);
-                ui->checkButton->setEnabled(false);
+        ui->checkButton->setEnabled(false);
     }
+}
+
+void MainWindow::updateRecords()
+{
+    QString path = QDir::currentPath() + "/records.txt";
+    QFile file(path);
+    QStringList scores;
+
+    if(file.open(QIODevice::ReadOnly | QIODevice::Text)){
+        QTextStream in(&file);
+        while(!in.atEnd()){
+            QString line = in.readLine().trimmed();
+            if (!line.isEmpty()) scores.append(line);
+        }
+        file.close();
+    }
+
+    std::sort(scores.begin(), scores.end(), [](const QString &a, const QString &b){
+            return a.toInt() > b.toInt();
+        });
+    QString text = "ТОП РЕКОРДОВ:\n\n";
+
+    for(int i = 0;i < qMin(10, scores.size());++i){
+        text += QString("%1 место: %2 баллов\n").arg(i+1).arg(scores[i]);
+    }
+
+    if (scores.isEmpty()) text += "Пока нет рекордов";
+
+    ui->recordsTextEdit->setPlaintText(text);
 }
