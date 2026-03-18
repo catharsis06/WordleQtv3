@@ -38,3 +38,36 @@ QString GameLogic::processGuess(const QString &guess)
 
     emit logMessage("[player]: + g");
 };
+
+QString GameLogic::getFeedback(const QString &guess) const
+{
+    QString letters = "";
+
+    QString view = "_ _ _ _";
+
+    for(int i = 0; i < 4; ++i){
+
+        if(guess[i] == m_secretWord[i]) {
+            view[i*2] = guess[i];
+        }
+
+        if(m_secretWord.contains(guess[i]) && !letters.contains(guess[i])) {
+            if(!letters.isEmpty()) letters += ", ";
+            letters += guess[i];
+        }
+    }
+
+    if (letters.isEmpty()) letters = "-";
+
+    return "[game]: Отгаданные буквы: " + letters + "\nСлово: " + view;
+}
+
+int GameLogic::getScore() const
+{
+    return m_score;
+}
+
+bool GameLogic::isGameOver() const
+{
+    return m_attempts >= 5;
+}
