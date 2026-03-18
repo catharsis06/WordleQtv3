@@ -58,3 +58,34 @@ void MainWindow::onNewGame(){
         ui->checkButton->setEnabled(true);         // разблокируем кнопку
         ui->logTextEdit->clear();
 }
+
+void MainWindow::onCheck()
+{
+    if (!isPlaying) return;
+
+    QString answer = game->processGuess(ui->inputLineEdit->text());
+
+    ui->inputlineEdit->clear();
+
+    addToLog(answer);
+
+    if (answer.contains("отгадали слово")){
+        QMessageBox::StandartButton reply = QMessageBox::question(this, "Продолжить?", "Желаете продолжить?", QMessageBox::Yes | QMessageBox::No);
+        if (reply == QMessageBox::Yes) {
+            game->startNewGame();
+        }
+        else{
+            game->saveScore();
+            addToLog("[game]: Игра окончена. Всего: " + QString::number(game->getScore()) + " баллов");
+            isPlaying = false;
+            ui->inputLineEdit->setEnabled(false);
+            ui->checkButton->setEnabled(false);
+        }
+    }
+    else if(answer.contains("Попытки закончились")){
+        game->saveScore();
+        isPlaying = false;
+        ui->inputLineEdit->setEnabled(false);
+                ui->checkButton->setEnabled(false);
+    }
+}
