@@ -36,7 +36,7 @@ QString GameLogic::processGuess(const QString &guess)
 
     m_attempts++;
 
-    emit logMessage("[player]: + g");
+    emit logMessage("[player]: " + g);
 };
 
 QString GameLogic::getFeedback(const QString &guess) const
