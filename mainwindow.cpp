@@ -33,3 +33,14 @@ MainWindow::~MainWindow()
 void MainWindow::addToLog(const QString &text){
     ui->logTextEdit->append(text)
 }
+
+void MainWindow::onGameMenu()
+{
+    ui->stackedWidget->setCurrentIndex(0);
+}
+
+void MainWindow::onRecordsMenu()
+{
+    ui->stackedWidget->setCurrentIndex(1);
+    updateRecords();
+}
