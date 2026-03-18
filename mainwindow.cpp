@@ -44,3 +44,17 @@ void MainWindow::onRecordsMenu()
     ui->stackedWidget->setCurrentIndex(1);
     updateRecords();
 }
+
+void MainWindow::onNewGame(){
+    if (isPlaying) {
+        game->saveScore();
+        addToLog("[game]: Вы заработали " + QString::number(game->getScore()) + " баллов.");
+
+    }
+
+    game->startNewGame();
+    isPLaying = true;
+    ui->inputLineEdit->setEnabled(true);       // разблокируем поле ввода
+        ui->checkButton->setEnabled(true);         // разблокируем кнопку
+        ui->logTextEdit->clear();
+}
