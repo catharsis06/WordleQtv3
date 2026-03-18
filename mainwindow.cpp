@@ -30,3 +30,6 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::addToLog(const QString &text){
+    ui->logTextEdit->append(text)
+}
